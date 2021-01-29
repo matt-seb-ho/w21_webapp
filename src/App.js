@@ -7,6 +7,7 @@ import MockData from './MOCK_DATA.json';
 import Login from './components/Login';
 import Logout from './components/Logout';
 import { Panel, PanelGroup } from 'rsuite';
+import dummyPfp from './dummy_pfp.jpg';
 
 
 function Spacer(props) {
@@ -60,6 +61,18 @@ function App() {
 			<Spacer height={"5em"} />
 
 			<div>
+			<div className="cardboard">
+				<div className="card">
+					<div className="cardname">
+						<h1 style={{marginBottom: 0}} >Person McGee</h1>
+						<Spacer width="5%" />
+						<img src={dummyPfp} height="10%" width="10%" />
+					</div>
+					<p>
+						Hello, am person omo. this is my blurb. what if ppl had a little blurb like this. Wouldn't that be neat. look at all this filler I am typing!!! so cool!!
+					</p>
+				</div>
+			</div>
 			{MockData.filter((item) => {
 				return (searchIn === "" ||
 					item.first_name.toLowerCase().includes(searchIn.toLowerCase()));
@@ -71,7 +84,6 @@ function App() {
 			})}
 			</div>
 
-		
 
 		</div>
 	);

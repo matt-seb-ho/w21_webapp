@@ -6,6 +6,32 @@
   */
 }
 
+.cardboard {
+	height: 60%;
+	width: 70%;
+	position: fixed;
+	top: 20%;
+	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+	right: 5%;
+	background-color: #282c34;
+}
+
+.card {
+	margin: 5% 5% 5% 5%;
+}
+
+.cardname {	
+	display: flex;
+	flex-direction: row;
+	justify-content: flex-end;
+	align-items: flex-end;
+}
+
+#pfp {
+	width: 10%;
+	height: 10%;
+}
+
 .App input {
 	height: 38px;
 	font-size: 15px;
