@@ -4,6 +4,10 @@ import {useState} from 'react';
 
 import SearchBar from './components/SearchBar.js';
 import MockData from './MOCK_DATA.json';
+import Login from './components/Login';
+import Logout from './components/Logout';
+import { Panel, PanelGroup } from 'rsuite';
+
 
 function Spacer(props) {
 	return <div style={{width: props.width, height: props.height}}> </div>;
@@ -12,7 +16,7 @@ function Spacer(props) {
 function custFilter(arr, filters){
 	return arr.filter(item => {
 		for(const criteria in filters){
-			if(item[criteria] === undefined || item[criteria] != filters[criteria]){
+			if(item[criteria] === undefined || item[criteria] !== filters[criteria]){
 				return false;
 			}
 		}
@@ -23,13 +27,34 @@ function custFilter(arr, filters){
 
 function App() {
 	const [searchIn, setSearchIn] = useState('');
+	const [loggedIn, setLoggedIn] = useState(false);
+	const [name, setName] = useState();
 	return (
 		<div className="App">
 			<div id="AppHead" className="sticky" >
 				<Spacer width={100} />
 				<h1>FFFF</h1>
 				<Spacer width={100} />
-				<SearchBar setSearchIn={setSearchIn} />
+				<div className="input-container">
+					<SearchBar setSearchIn={setSearchIn} />
+				</div>
+				<div>
+					{loggedIn ? 
+					<Logout 
+						className="OAuthStuff"
+						loggedIn={loggedIn} 
+						setLoggedIn = {(bool) => setLoggedIn(bool)}
+					/> :
+					<Login 
+						className="OAuthStuff"
+						loggedIn={loggedIn} 
+						setLoggedIn = {(bool) => setLoggedIn(bool)} 
+						setName={(name) => setName(name)}
+					/>
+					}
+				</div>
+				<Spacer width={50} />
+				
 			</div>
 
 			<Spacer height={"5em"} />
@@ -45,6 +70,9 @@ function App() {
 					</div> );
 			})}
 			</div>
+
+		
+
 		</div>
 	);
 }

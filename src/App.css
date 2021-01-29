@@ -7,10 +7,22 @@
 }
 
 .App input {
-	width: 450px;
-	height: 30px;
+	height: 38px;
 	font-size: 15px;
 	padding-left: 8px;
+	width: 100%;
+}
+
+.OAuthStuff {
+/*	height: 20px;
+	background-color: black;
+*/
+}
+
+.input-container {
+	flex-grow: 1;
+	background-color: blue;
+	margin-right: 5%;
 }
 
 .sticky {
@@ -22,13 +34,14 @@
 #AppHead {
   display: flex;
   align-items: center;
-  flex-shrink: 0;
-
+  background-color: #282c34; 
+  flex-grow: 1;
+  width: 100%;
 }
 
 .user {
   font-size: 18px;
-  text-align: center;
+  margin-left: 100px;
 }
 
 .App-logo {
