@@ -1,13 +1,15 @@
 import logo from './logo.svg';
 import './App.css';
-import {useState} from 'react';
+import { useState, useEffect } from 'react';
 
 import SearchBar from './components/SearchBar.js';
 import MockData from './MOCK_DATA.json';
 import Login from './components/Login';
 import Logout from './components/Logout';
-import { Panel, PanelGroup } from 'rsuite';
 import dummyPfp from './dummy_pfp.jpg';
+import { userRef } from './firebase';
+import signUp from './api/signUp';
+import signIn from './api/signIn';
 
 
 function Spacer(props) {
@@ -30,6 +32,30 @@ function App() {
 	const [searchIn, setSearchIn] = useState('');
 	const [loggedIn, setLoggedIn] = useState(false);
 	const [name, setName] = useState();
+
+	useEffect(() => {
+		
+		function callFunc(){
+			userRef.push({
+				email: "test2@gmail.com",
+				password: "beans123"
+			})
+		}
+		callFunc();
+		//set replaces, push adds
+		
+	}, [])
+
+	const onSignUp = () => {
+		const result = signUp("testsign9@gmail.com", "passwordtest", "Bob", "Last");
+		console.log(result);
+	};
+
+	const onSignIn = () => {
+		const result = signIn("testsign9@gmail.com", "passwordtest");
+		console.log(result);
+	};
+
 	return (
 		<div className="App">
 			<div id="AppHead" className="sticky" >
@@ -40,6 +66,10 @@ function App() {
 					<SearchBar setSearchIn={setSearchIn} />
 				</div>
 				<div>
+					<button onClick={()=>onSignIn()}>Sign In</button>
+					<button onClick={()=>onSignUp()}>Sign Up</button>
+					{/*
+					<button onClick={()=>onSignUp()}>Sign Up</button>
 					{loggedIn ? 
 					<Logout 
 						className="OAuthStuff"
@@ -53,6 +83,7 @@ function App() {
 						setName={(name) => setName(name)}
 					/>
 					}
+					*/}
 				</div>
 				<Spacer width={50} />
 				
@@ -71,6 +102,11 @@ function App() {
 					<p>
 						Hello, am person omo. this is my blurb. what if ppl had a little blurb like this. Wouldn't that be neat. look at all this filler I am typing!!! so cool!!
 					</p>
+					<ul>
+						<li>Video Games</li>
+						<li>Anime</li>
+						<li>Piano</li>
+					</ul>
 				</div>
 			</div>
 			{MockData.filter((item) => {

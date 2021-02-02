@@ -96,6 +96,10 @@
   color: #61dafb;
 }
 
+.outerBox {
+	border-radius: 10px;
+	box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.6), 0px 2px 10px rgba(0, 0, 0, 0.6);
+}
 
 @keyframes App-logo-spin {
   from {
