@@ -12,6 +12,7 @@ import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import { shadows } from '@material-ui/system';
 
 function Copyright() {
   return (
@@ -50,7 +51,7 @@ export default function SignIn() {
   const classes = useStyles();
 
   return (
-    <Container className="signInBox" component="main" maxWidth="xs">
+    <Container className="signInBox" component="main" maxWidth="xs" boxShadow={5}>
       <CssBaseline />
       <div className={classes.paper}>
 		{/*

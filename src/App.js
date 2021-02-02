@@ -2,6 +2,8 @@ import logo from './logo.svg';
 import './App.css';
 import { useState, useEffect } from 'react';
 
+import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
+import { Box, Button, Paper } from '@material-ui/core';
 import SearchBar from './components/SearchBar.js';
 import MockData from './MOCK_DATA.json';
 import Login from './components/Login';
@@ -10,11 +12,27 @@ import dummyPfp from './dummy_pfp.jpg';
 import { userRef } from './firebase';
 import signUp from './api/signUp';
 import signIn from './api/signIn';
+import { dummy } from "./dummyPerson";
 import SignIn from './components/SignIn';
+import Modal from 'react-modal';
+import TextField from '@material-ui/core/TextField';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import blue from '@material-ui/core/colors/blue';
 
 function Spacer(props) {
 	return <div style={{width: props.width, height: props.height}}> </div>;
 }
+
+const darkTheme = createMuiTheme({
+  palette: {
+    type: 'dark',
+	primary: blue,
+  },
+});
 
 function custFilter(arr, filters){
 	return arr.filter(item => {
@@ -32,6 +50,10 @@ function App() {
 	const [searchIn, setSearchIn] = useState('');
 	const [loggedIn, setLoggedIn] = useState(false);
 	const [name, setName] = useState();
+	const [showLogin, setShowLogin] = useState(false);
+
+	const handleClose = () => setShowLogin(false);
+	const handleShow = () => setShowLogin(true);
 
 	useEffect(() => {
 		
@@ -55,12 +77,20 @@ function App() {
 		const result = signIn("testsign9@gmail.com", "passwordtest");
 		console.log(result);
 	};
+	
+	const [open, setOpen] = useState(false);
+
+  	const handleClickOpen = () => {
+   		setOpen(true);
+  	};
+
+	const demoHandleClose = () => {
+    	setOpen(false);
+  	};
 
 	return (
-		<div className="App" style={{backgroundColor: "#282c34"}}>
-			<div style={{display: "none", justifyContent: "center"}}>
-			<SignIn />
-			</div>
+		<ThemeProvider theme={darkTheme}>
+		<div className="App"> 
 			<div id="AppHead" className="sticky" >
 				<Spacer width={100} />
 				<h1>FFFF</h1>
@@ -69,9 +99,12 @@ function App() {
 					<SearchBar setSearchIn={setSearchIn} />
 				</div>
 				<div>
-					<button onClick={()=>onSignIn()}>Sign In</button>
-					<button onClick={()=>onSignUp()}>Sign Up</button>
+					<Button onClick={handleShow}>Sign In</Button>
+					<Button variant="outlined" color="primary" onClick={handleClickOpen}>
+	  					Sign In
+					</Button>
 					{/*
+					<Button onClick={()=>onSignUp()}>Sign Up</Button>
 					<button onClick={()=>onSignUp()}>Sign Up</button>
 					{loggedIn ? 
 					<Logout 
@@ -91,27 +124,51 @@ function App() {
 				<Spacer width={50} />
 				
 			</div>
+			{/*
+			{showLogin?
+				<SignIn /> :
+				null
+			}
+			<Modal isOpen={showLogin}>
+				<SignIn />
+			</Modal>
+			*/}
+			
+			<Dialog open={open} onClose={demoHandleClose} aria-labelledby="form-dialog-title">
+				<DialogTitle id="form-dialog-title">SignIn</DialogTitle>
+				<DialogContent>
+					<SignIn />
+				</DialogContent>
+				<DialogActions>
+				</DialogActions>
+			</Dialog>
 
 			<Spacer height={"5em"} />
 
 			<div>
-			<div className="cardboard">
-				<div className="card">
-					<div className="cardname">
-						<h1 style={{marginBottom: 0}} >Person McGee</h1>
-						<Spacer width="5%" />
-						<img src={dummyPfp} height="10%" width="10%" />
-					</div>
-					<p>
-						Hello, am person omo. this is my blurb. what if ppl had a little blurb like this. Wouldn't that be neat. look at all this filler I am typing!!! so cool!!
-					</p>
-					<ul>
-						<li>Video Games</li>
-						<li>Anime</li>
-						<li>Piano</li>
-					</ul>
+			<Paper className="profile">
+				<div style={{display: "flex", alignItems: "flex-end"}}>
+				{/*
+				<img src={dummyPfp} height="15%" width="15%" />
+				<Spacer width="10%" />
+				*/}
+				<h1 style={{marginBottom: 0, paddingBottom: 0}}>{dummy.firstName} {dummy.lastName}</h1>
+				
 				</div>
-			</div>
+				<Spacer height="3%" />
+				<p>{dummy.bio}</p>
+				<Spacer height="5%"/>
+				<h2 style={{marginBottom: 0, paddingBottom: 0}}>Tags</h2>
+				<ul>
+					<li>Video Games</li>
+					<li>Anime</li>
+					<li>Piano</li>
+					{dummy.tags.map((item) => {
+							return <li>{item}</li>
+						})
+					}
+				</ul>
+			</Paper>
 			{MockData.filter((item) => {
 				return (searchIn === "" ||
 					item.first_name.toLowerCase().includes(searchIn.toLowerCase()));
@@ -124,6 +181,7 @@ function App() {
 			</div>
 
 		</div>
+		</ThemeProvider>
 	);
 }
 

@@ -1,30 +1,19 @@
 .App {
   color: white;
-  background-color: #282c34;
+  background-color: #303030;
+  
   /*
+  background-color: #303030;
   text-align: center;
   */
 }
 
-.cardboard {
-	height: 60%;
-	width: 70%;
+.profile {	
 	position: fixed;
-	top: 20%;
-	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-	right: 5%;
-	background-color: #282c34;
-}
-
-.card {
-	margin: 5% 5% 5% 5%;
-}
-
-.cardname {	
-	display: flex;
-	flex-direction: row;
-	justify-content: flex-end;
-	align-items: flex-end;
+	width: 50%;
+	height: 75%;
+	padding: 2% 2% 2% 2%;
+	margin-left: 30%;
 }
 
 #pfp {
@@ -60,7 +49,8 @@
 #AppHead {
   display: flex;
   align-items: center;
-  background-color: #282c34; 
+  /*background-color: #282c34; */
+  background-color: #303030;
   flex-grow: 1;
   width: 100%;
 }
@@ -82,7 +72,9 @@
 }
 
 .App-header {
+  /*
   background-color: #282c34;
+  */
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -104,19 +96,23 @@
 .signInBox {
 	position: fixed;
 	display: block;
-	z-index: 2;
+	z-index: 3;
+	top: 15%;
+	left: 35%;
+	box-shadow: 10;
+	text-align: center;
+ 	background-color: #303030;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.outerSignInBox {
+	z-index:2;
+	background-color: blue;
 }
 
 html {	
+  /*
   background-color: #282c34;
+  */
   height: 100%;
 }
+
