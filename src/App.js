@@ -10,7 +10,7 @@ import dummyPfp from './dummy_pfp.jpg';
 import { userRef } from './firebase';
 import signUp from './api/signUp';
 import signIn from './api/signIn';
-
+import SignIn from './components/SignIn';
 
 function Spacer(props) {
 	return <div style={{width: props.width, height: props.height}}> </div>;
@@ -57,7 +57,10 @@ function App() {
 	};
 
 	return (
-		<div className="App">
+		<div className="App" style={{backgroundColor: "#282c34"}}>
+			<div style={{display: "none", justifyContent: "center"}}>
+			<SignIn />
+			</div>
 			<div id="AppHead" className="sticky" >
 				<Spacer width={100} />
 				<h1>FFFF</h1>
@@ -119,7 +122,6 @@ function App() {
 					</div> );
 			})}
 			</div>
-
 
 		</div>
 	);
