@@ -15,19 +15,7 @@ import Container from '@material-ui/core/Container';
 import { shadows } from '@material-ui/system';
 import { useAuth } from '../contexts/AuthContext';
 import { Alert } from '@material-ui/lab';
-
-function Copyright() {
-  return (
-    <Typography variant="body2" color="textSecondary" align="center">
-      {'Copyright © '}
-      <Link color="inherit" href="https://material-ui.com/">
-        Your Website
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
-}
+import { userRef } from '../firebase';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -55,7 +43,7 @@ export default function SignIn() {
   const lastRef = useRef();
   const emailRef = useRef();
   const passwordRef = useRef();
-  const { signup } = useAuth();
+  const { signup, currentUser } = useAuth();
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
@@ -67,8 +55,17 @@ export default function SignIn() {
 		setLoading(true);
 		console.log(emailRef.current.value);
 		await signup(emailRef.current.value, passwordRef.current.value);
+		console.log("printing dummyObj", {inner: {bean: 1, curd:2}});
+		console.log("printing currentUser: ", currentUser);
+		userRef.child(currentUser.uid).set({
+			firstName: firstRef.current.value,
+			lastName: lastRef.current.value,
+			email: emailRef.current.value,
+			contactInfo: [],
+			tags: [],
+		});
 	} catch {
-		setError('Failed to create an account');
+		setError('Failed to sign up');
 	}
 	setLoading(false);
   }

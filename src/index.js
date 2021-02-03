@@ -4,6 +4,7 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
+import { AuthProvider } from './contexts/AuthContext';
 
 /*
 const darkTheme = createMuiTheme({
@@ -15,7 +16,9 @@ const darkTheme = createMuiTheme({
 
 ReactDOM.render(
   <React.StrictMode>
+   <AuthProvider>
     <App />
+   </AuthProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );

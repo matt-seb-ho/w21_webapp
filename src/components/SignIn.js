@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -20,6 +20,8 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import blue from '@material-ui/core/colors/blue';
 import SignUp from './SignUp';
+import { auth } from '../firebase';
+import { useAuth } from '../contexts/AuthContext';
 
 function Copyright() {
   return (
@@ -56,6 +58,11 @@ const useStyles = makeStyles((theme) => ({
 
 export default function SignIn() {
   const classes = useStyles();
+  const emailRef = useRef();
+  const passwordRef = useRef();
+  const { login } = useAuth();
+  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
   const [SUopen, setSUopen] = useState(false);
 
   const handleSUopen = () => {
@@ -64,6 +71,21 @@ export default function SignIn() {
   const handleSUclose = () => {
   	setSUopen(false);
   };
+
+  async function handleSubmit(e){
+  	e.preventDefault()
+
+	try {
+		setError('');
+		setLoading(true);
+		console.log(emailRef.current.value);
+		await login(emailRef.current.value, passwordRef.current.value);	
+		setSUopen(false);
+	} catch {
+		setError('Sign In Failed');
+	}
+	setLoading(false);
+  }
 
 
   return (
@@ -78,7 +100,8 @@ export default function SignIn() {
         <Typography component="h1" variant="h5">
           Sign in
         </Typography>
-        <form className={classes.form} noValidate>
+	{error && <p style={{color: "red"}}>{error}</p>}
+        <form className={classes.form} onSubmit={handleSubmit} noValidate>
           <TextField
             variant="outlined"
             margin="normal"
@@ -88,6 +111,7 @@ export default function SignIn() {
             label="Email Address"
             name="email"
             autoComplete="email"
+	    inputRef={emailRef}
             autoFocus
           />
           <TextField
@@ -100,6 +124,7 @@ export default function SignIn() {
             type="password"
             id="password"
             autoComplete="current-password"
+	    inputRef={passwordRef}
           />
           <FormControlLabel
             control={<Checkbox value="remember" color="primary" />}

@@ -2,9 +2,13 @@
 
 export default function SearchBar(props){
 	return (
-		<div>
-			<input type="text" placeholder="Search"
+		<div className="searchstack">
+			<input type="text" placeholder="Name" className="nameBar"
 				onChange={event => {props.setSearchIn(event.target.value)}}
+				style={{flexGrow:1}}
+			/>
+			<input type="text" placeholder="Tags" className="tagBar"
+				onChange={event => {props.setTagsIn(event.target.value)}}
 			/>
 		</div>
 	);

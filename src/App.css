@@ -25,7 +25,8 @@
 	height: 38px;
 	font-size: 15px;
 	padding-left: 8px;
-	width: 100%;
+	margin: 0 0 0 0;
+/*	width: 100%; */
 }
 
 .OAuthStuff {
@@ -36,7 +37,7 @@
 
 .input-container {
 	flex-grow: 1;
-	background-color: blue;
+/*	background-color: blue;*/
 	margin-right: 5%;
 }
 
@@ -53,6 +54,7 @@
   background-color: #303030;
   flex-grow: 1;
   width: 100%;
+  z-index: 2;
 }
 
 .user {
@@ -75,6 +77,7 @@
   /*
   background-color: #282c34;
   */
+  background-color: #303030;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -109,10 +112,23 @@
 	background-color: blue;
 }
 
+.searchstack {
+	display: flex;
+}
+
+.tagBar {
+	flex-grow: 3;
+}
+
+.nameBar {
+	flex-grow: 1;
+}
+
 html {	
   /*
   background-color: #282c34;
   */
+  background-color: #303030;
   height: 100%;
 }
 
