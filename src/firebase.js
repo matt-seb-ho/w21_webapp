@@ -11,6 +11,7 @@ const firebaseConfig = {
 };
 
 export const firebaseApp = firebase.initializeApp(firebaseConfig);
+export const auth = firebaseApp.auth();
 
 export const userRef = firebaseApp.database().ref("users");
 

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -13,6 +13,13 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { shadows } from '@material-ui/system';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import blue from '@material-ui/core/colors/blue';
+import SignUp from './SignUp';
 
 function Copyright() {
   return (
@@ -49,6 +56,15 @@ const useStyles = makeStyles((theme) => ({
 
 export default function SignIn() {
   const classes = useStyles();
+  const [SUopen, setSUopen] = useState(false);
+
+  const handleSUopen = () => {
+  	setSUopen(true);
+  };
+  const handleSUclose = () => {
+  	setSUopen(false);
+  };
+
 
   return (
     <Container className="signInBox" component="main" maxWidth="xs" boxShadow={5}>
@@ -105,9 +121,18 @@ export default function SignIn() {
               </Link>
             </Grid>
             <Grid item>
-              <Link href="#" variant="body2">
+              <Link href="#" variant="body2"
+	      	onClick={handleSUopen}
+	      >
                 {"Don't have an account? Sign Up"}
               </Link>
+	      <Dialog open={SUopen} onClose={handleSUclose}>
+	      	<DialogTitle id="signUp">Sign Up</DialogTitle>
+		<DialogContent>
+		  <SignUp />
+		</DialogContent>
+	      </Dialog>
+
             </Grid>
           </Grid>
         </form>

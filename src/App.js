@@ -14,7 +14,7 @@ import signUp from './api/signUp';
 import signIn from './api/signIn';
 import { dummy } from "./dummyPerson";
 import SignIn from './components/SignIn';
-import Modal from 'react-modal';
+import SignUp from './components/SignUp';
 import TextField from '@material-ui/core/TextField';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -22,6 +22,8 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import blue from '@material-ui/core/colors/blue';
+import { AuthProvider } from './contexts/AuthContext';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 
 function Spacer(props) {
 	return <div style={{width: props.width, height: props.height}}> </div>;
@@ -50,45 +52,18 @@ function App() {
 	const [searchIn, setSearchIn] = useState('');
 	const [loggedIn, setLoggedIn] = useState(false);
 	const [name, setName] = useState();
-	const [showLogin, setShowLogin] = useState(false);
+	const [showSI, setShowSI] = useState(false);
 
-	const handleClose = () => setShowLogin(false);
-	const handleShow = () => setShowLogin(true);
-
-	useEffect(() => {
-		
-		function callFunc(){
-			userRef.push({
-				email: "test2@gmail.com",
-				password: "beans123"
-			})
-		}
-		callFunc();
-		//set replaces, push adds
-		
-	}, [])
-
-	const onSignUp = () => {
-		const result = signUp("testsign9@gmail.com", "passwordtest", "Bob", "Last");
-		console.log(result);
-	};
-
-	const onSignIn = () => {
-		const result = signIn("testsign9@gmail.com", "passwordtest");
-		console.log(result);
-	};
-	
-	const [open, setOpen] = useState(false);
-
-  	const handleClickOpen = () => {
-   		setOpen(true);
+  	const handleSIopen = () => {
+   		setShowSI(true);
   	};
 
-	const demoHandleClose = () => {
-    	setOpen(false);
+	const handleSIclose = () => {
+    		setShowSI(false);
   	};
 
 	return (
+		<AuthProvider>
 		<ThemeProvider theme={darkTheme}>
 		<div className="App"> 
 			<div id="AppHead" className="sticky" >
@@ -99,8 +74,7 @@ function App() {
 					<SearchBar setSearchIn={setSearchIn} />
 				</div>
 				<div>
-					<Button onClick={handleShow}>Sign In</Button>
-					<Button variant="outlined" color="primary" onClick={handleClickOpen}>
+					<Button variant="outlined" color="primary" onClick={handleSIopen}>
 	  					Sign In
 					</Button>
 					{/*
@@ -134,7 +108,7 @@ function App() {
 			</Modal>
 			*/}
 			
-			<Dialog open={open} onClose={demoHandleClose} aria-labelledby="form-dialog-title">
+			<Dialog open={showSI} onClose={handleSIclose} aria-labelledby="form-dialog-title">
 				<DialogTitle id="form-dialog-title">SignIn</DialogTitle>
 				<DialogContent>
 					<SignIn />
@@ -182,6 +156,7 @@ function App() {
 
 		</div>
 		</ThemeProvider>
+		</AuthProvider>
 	);
 }
 
