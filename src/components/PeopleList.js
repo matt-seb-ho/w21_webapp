@@ -6,6 +6,7 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import Divider from '@material-ui/core/Divider';
 import MockData from '../MOCK_DATA-3.json';
+import getStarterTags from '../mockTags'; 
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -14,6 +15,13 @@ const useStyles = makeStyles((theme) => ({
     //backgroundColor: theme.palette.background.paper,
   },
 }));
+
+function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+}
 
 function tagFilter(arr, tagsStr){
 	//takes a list of tags
@@ -65,6 +73,7 @@ export function SimpleList() {
 
 export default function PeopleList(props){
 	const classes = useStyles();
+	let starterTags = getStarterTags();
 
 	for(let i = 0; i < MockData.length; i++){
 			//pre-processing for mock data
@@ -74,8 +83,9 @@ export default function PeopleList(props){
 			}
 			if(MockData[i]["tags"] === undefined){
 					MockData[i]["tags"] = [];
-					for(let j = 0; j < MockData[i]["tagsStr"].length; j++){
-						MockData[i]["tags"].push(MockData[i]["tagsStr"][j]);
+					shuffleArray(starterTags);
+					for(let j = 0; j < 7; j++){
+						MockData[i]["tags"].push(starterTags[j]);
 					}
 			}
 
