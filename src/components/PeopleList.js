@@ -5,7 +5,7 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import Divider from '@material-ui/core/Divider';
-import MockData from '../MOCK_DATA-3.json';
+import MockData from '../MOCK_DATA-2.json';
 import getStarterTags from '../mockTags'; 
 
 const useStyles = makeStyles((theme) => ({

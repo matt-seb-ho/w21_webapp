@@ -1,4 +1,3 @@
-import logo from './logo.svg';
 import './App.css';
 import { useState, useEffect } from 'react';
 
@@ -50,6 +49,7 @@ function App() {
 	const [currentProf, setCurrentProf] = useState(dummy);
 	const { currentUser } = useAuth()
 
+	/*
 	auth.onAuthStateChanged(function(user) {
 	  if (user) {
     		// User is signed in.
@@ -61,12 +61,24 @@ function App() {
 		setLoggedIn(false);
   	  }
 	});
+	*/
+
   	const handleSIopen = () => {
    		setShowSI(true);
   	};
 
 	const handleSIclose = () => {
     		setShowSI(false);
+  	};
+
+  	const [SUopen, setSUopen] = useState(false);
+
+	const handleSUopen = () => {
+  		setSUopen(true);
+  	};
+
+  	const handleSUclose = () => {
+  		setSUopen(false);
   	};
 
 	return (
@@ -83,9 +95,16 @@ function App() {
 					/>
 				</div>
 				<div>
-					{loggedIn ?
+					<p>{currentUser && currentUser.email}</p>
+				</div>
+				<Spacer width={20} />
+				<div>
+					{currentUser ?
 					<Button variant="outlined" color="secondary" onClick={
-						() => {auth.signOut()}
+						() => {
+							auth.signOut();
+							setLoggedIn(false)
+						}
 					}>
 	  					Sign Out 
 					</Button> : 
@@ -101,10 +120,14 @@ function App() {
 			<Dialog open={showSI} onClose={handleSIclose} aria-labelledby="form-dialog-title">
 				<DialogTitle id="form-dialog-title">SignIn</DialogTitle>
 				<DialogContent>
-					<SignIn />
+					<SignIn setLoggedIn={setLoggedIn} handleSIclose={handleSIclose} handleSUopen={handleSUopen} />
 				</DialogContent>
-				<DialogActions>
-				</DialogActions>
+			</Dialog>
+			<Dialog open={SUopen} onClose={handleSUclose} aria-labelledby="form-dialog-title">
+				<DialogTitle id="form-dialog-title">SignUp</DialogTitle>
+				<DialogContent>
+					<SignUp setLoggedIn={setLoggedIn} />
+				</DialogContent>
 			</Dialog>
 
 			<Spacer height={"5em"} />

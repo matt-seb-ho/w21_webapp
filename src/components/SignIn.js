@@ -56,11 +56,11 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function SignIn() {
+export default function SignIn(props) {
   const classes = useStyles();
   const emailRef = useRef();
   const passwordRef = useRef();
-  const { login } = useAuth();
+  const { login, currentUser } = useAuth();
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const [SUopen, setSUopen] = useState(false);
@@ -80,6 +80,8 @@ export default function SignIn() {
 		setLoading(true);
 		console.log(emailRef.current.value);
 		await login(emailRef.current.value, passwordRef.current.value);	
+		console.log("postSU currentUser: ", currentUser);
+		props.setLoggedIn(true);
 		setSUopen(false);
 	} catch {
 		setError('Sign In Failed');
@@ -100,6 +102,9 @@ export default function SignIn() {
         <Typography component="h1" variant="h5">
           Sign in
         </Typography>
+	<p>
+	{/* currentUser && currentUser.uid */}
+	</p>
 	{error && <p style={{color: "red"}}>{error}</p>}
         <form className={classes.form} onSubmit={handleSubmit} noValidate>
           <TextField
@@ -147,16 +152,21 @@ export default function SignIn() {
             </Grid>
             <Grid item>
               <Link href="#" variant="body2"
-	      	onClick={handleSUopen}
+	      	onClick={()=>{
+			props.handleSIclose();
+			props.handleSUopen();
+		}}
 	      >
                 {"Don't have an account? Sign Up"}
               </Link>
+	      {/*
 	      <Dialog open={SUopen} onClose={handleSUclose}>
 	      	<DialogTitle id="signUp">Sign Up</DialogTitle>
 		<DialogContent>
-		  <SignUp />
+		  <SignUp setLoggedIn={props.setLoggedIn} />
 		</DialogContent>
 	      </Dialog>
+	      */}
 
             </Grid>
           </Grid>

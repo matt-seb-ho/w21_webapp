@@ -15,7 +15,7 @@ import Container from '@material-ui/core/Container';
 import { shadows } from '@material-ui/system';
 import { useAuth } from '../contexts/AuthContext';
 import { Alert } from '@material-ui/lab';
-import { userRef } from '../firebase';
+import { auth, userRef } from '../firebase';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -37,7 +37,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function SignIn() {
+export default function SignUp(props) {
   const classes = useStyles();
   const firstRef = useRef();
   const lastRef = useRef();
@@ -55,7 +55,9 @@ export default function SignIn() {
 		setLoading(true);
 		console.log(emailRef.current.value);
 		await signup(emailRef.current.value, passwordRef.current.value);
-		console.log("printing dummyObj", {inner: {bean: 1, curd:2}});
+		props.setLoggedIn(true);
+		let currentUser = auth.currentUser;
+		//console.log("printing dummyObj", {inner: {bean: 1, curd:2}});
 		console.log("printing currentUser: ", currentUser);
 		userRef.child(currentUser.uid).set({
 			firstName: firstRef.current.value,
@@ -83,6 +85,7 @@ export default function SignIn() {
           Sign Up 
         </Typography>
 	{/* currentUser.email */}
+	{/* currentUser && JSON.stringify(currentUser) */}
 	{error && <p style={{color:"red"}}>{error}</p>}
         <form className={classes.form} onSubmit={handleSubmit} noValidate>
 	  <TextField
