@@ -10,8 +10,11 @@ import getStarterTags from '../mockTags';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    width: '100%',
-    maxWidth: 360,
+
+    width: '20%',
+    float: 'right'
+    //width: '100%',
+    //maxWidth: 360,
     //backgroundColor: theme.palette.background.paper,
   },
 }));
@@ -23,7 +26,7 @@ function shuffleArray(array) {
     }
 }
 
-function tagFilter(arr, tagsStr){
+export function tagFilter(arr, tagsStr){
 	//takes a list of tags
 	if(tagsStr === ""){
 		return arr;
@@ -106,7 +109,7 @@ export default function PeopleList(props){
 						}}
 					>
 						<ListItemText primary={val.first_name + " " + val.last_name[0]}
-							style={{marginLeft: 100}}
+							style={{marginLeft: '12%'}}
 						/>
 					</ListItem> );
 			}

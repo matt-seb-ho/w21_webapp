@@ -22,10 +22,12 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import blue from '@material-ui/core/colors/blue';
 import { useAuth, AuthProvider } from './contexts/AuthContext';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
+//import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 import { auth } from './firebase';
 import PeopleList, {SimpleList} from './components/PeopleList';
 import Profile from './components/Profile';
+import SideBar from './components/SideBar';
+import AppBar from '@material-ui/core/AppBar';
 
 function Spacer(props) {
 	return <div style={{width: props.width, height: props.height}}> </div>;
@@ -85,6 +87,7 @@ function App() {
 		<ThemeProvider theme={darkTheme}>
 		<div className="App"> 
 			<div id="AppHead" className="sticky" >
+				<Paper id="AppHead" className="sticky">
 				<Spacer width={100} />
 				<h1>FFFF</h1>
 				<Spacer width={100} />
@@ -115,6 +118,7 @@ function App() {
 				</div>
 				<Spacer width={50} />
 				
+				</Paper>
 			</div>
 			
 			<Dialog open={showSI} onClose={handleSIclose} aria-labelledby="form-dialog-title">
@@ -132,31 +136,10 @@ function App() {
 
 			<Spacer height={"5em"} />
 
+			<SideBar tagStr={tagsIn} headerHeight={100}/>
+
 			<div>
 			<Profile person={currentProf}/>
-			{/*
-			<Paper className="profile">
-				<div style={{display: "flex", alignItems: "flex-end"}}>
-				<img src={dummyPfp} height="15%" width="15%" />
-				<Spacer width="10%" />
-				<h1 style={{marginBottom: 0, paddingBottom: 0}}>{dummy.firstName} {dummy.lastName}</h1>
-				
-				</div>
-				<Spacer height="3%" />
-				<p>{dummy.bio}</p>
-				<Spacer height="5%"/>
-				<h2 style={{marginBottom: 0, paddingBottom: 0}}>Tags</h2>
-				<ul>
-					<li>Video Games</li>
-					<li>Anime</li>
-					<li>Piano</li>
-					{dummy.tags.map((item) => {
-							return <li>{item}</li>
-						})
-					}
-				</ul>
-			</Paper>
-			*/}
 			<PeopleList 
 				searchIn={searchIn} 
 				setCurrentProf={setCurrentProf}

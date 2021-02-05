@@ -14,7 +14,6 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { shadows } from '@material-ui/system';
 import { useAuth } from '../contexts/AuthContext';
-import { Alert } from '@material-ui/lab';
 import { auth, userRef } from '../firebase';
 
 const useStyles = makeStyles((theme) => ({
