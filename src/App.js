@@ -11,7 +11,7 @@ import dummyPfp from './dummy_pfp.jpg';
 import { userRef } from './firebase';
 import signUp from './api/signUp';
 import signIn from './api/signIn';
-import { dummy } from "./dummyPerson";
+import { dummy, faq } from "./dummyPerson";
 import SignIn from './components/SignIn';
 import SignUp from './components/SignUp';
 import TextField from '@material-ui/core/TextField';
@@ -136,7 +136,12 @@ function App() {
 
 			<Spacer height={"5em"} />
 
-			<SideBar tagStr={tagsIn} headerHeight={100}/>
+			<SideBar
+				tagStr={tagsIn} 
+				headerHeight={100}
+				setStart={()=>{setCurrentProf(dummy)}}
+				setFAQ={()=>{setCurrentProf(faq)}}
+			/>
 
 			<div>
 			<Profile person={currentProf}/>

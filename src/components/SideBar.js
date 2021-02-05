@@ -73,6 +73,14 @@ export default function SideBar(props){
 						<ListItemText primary="My Profile" />
 					</ListItem>
 					<Divider />
+					<ListItem inset={true} button onClick={props.setStart}>
+						<ListItemText primary="Start Page" />
+					</ListItem>
+					<Divider />
+					<ListItem inset={true} button onClick={props.setFAQ}>
+						<ListItemText primary="FFFF?" />
+					</ListItem>
+					<Divider />
 					<ListItem>
 						<ListItemText primary="Current Tags" />
 					</ListItem>
