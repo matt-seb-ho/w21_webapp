@@ -15,15 +15,19 @@ export default function Profile(props){
 				<img src={dummyPfp} height="15%" width="15%" />
 				<Spacer width="10%" />
 				*/}
+
+				{ console.log("profile called") }
+				{ console.log(person) }
 				<h1 style={{marginBottom: 0, paddingBottom: 0}}>{person.firstName} {person.lastName}</h1>
 				
 				</div>
 				<Spacer height="3%" />
+				<h3 style={{marginBottom: 0, paddingBottom: 0}}>Bio</h3>
 				<p>{person.bio}</p>
 				<Spacer height="5%"/>
-				<h2 style={{marginBottom: 0, paddingBottom: 0}}>Tags</h2>
+				<h3 style={{marginBottom: 0, paddingBottom: 0}}>Tags</h3>
 				<ul>
-					{ person.tags.map((item) => {
+					{person.tags != null && person.tags.map((item) => {
 							return <li>{item}</li>
 						})
 					}

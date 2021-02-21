@@ -66,7 +66,7 @@ export default function SideBar(props){
 				<div style={{height: props.headerHeight}}></div>
 				<List>
 					<Divider />
-					<ListItem button>
+					<ListItem button onClick={props.setMyProf}>
 						<ListItemIcon>
 							<AccountCircleIcon />
 						</ListItemIcon>
@@ -82,9 +82,8 @@ export default function SideBar(props){
 					</ListItem>
 					<Divider />
 					<ListItem>
-						<ListItemText primary="Current Tags" />
+						<ListItemText primary="Current Tags:" />
 					</ListItem>
-					<Divider />
 					
 					{ props.tagStr.split(',').map(item => {
 						return (

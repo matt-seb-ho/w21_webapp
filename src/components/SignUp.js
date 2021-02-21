@@ -64,6 +64,7 @@ export default function SignUp(props) {
 			email: emailRef.current.value,
 			contactInfo: [],
 			tags: [],
+			bio: "",
 		});
 	} catch {
 		setError('Failed to sign up');

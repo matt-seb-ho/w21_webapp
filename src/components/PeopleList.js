@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
@@ -7,6 +7,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import Divider from '@material-ui/core/Divider';
 import MockData from '../MOCK_DATA-2.json';
 import getStarterTags from '../mockTags'; 
+import { userRef, database } from '../firebase';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -76,6 +77,26 @@ export function SimpleList() {
 
 export default function PeopleList(props){
 	const classes = useStyles();
+	const [people, setPeople] = useState([]);
+
+	useEffect(() => {
+		//console.log(userRef);
+		userRef.on("value", (snapshot) => {
+			let ppl = [];
+			snapshot.forEach(data => {
+				let dummyPerson = {
+					firstName: data.val().firstName,
+					lastName: data.val().lastName,
+					bio: ("bio" in data.val())? data.val().bio : "",
+					contactInfo: ("contactInfo" in data.val())? data.val().contactInfo : [],
+					tags: ("tags" in data.val())? data.val().tags : [],
+				}
+				ppl.push(dummyPerson);
+			})
+			setPeople(ppl);
+		})
+	}, [])
+	
 	let starterTags = getStarterTags();
 
 	for(let i = 0; i < MockData.length; i++){
@@ -95,6 +116,32 @@ export default function PeopleList(props){
 	}
 	
 	return (
+		<div className={classes.root}>
+			<List component="nav" aria-label="people">
+			{tagFilter( (people.filter((item) => {
+				return (props.searchIn === "" ||
+					item.firstName.toLowerCase().includes(props.searchIn.toLowerCase()));
+			})), props.tagsStr)
+				.map((val, key) => {
+					return ( 
+					<ListItem button className="user" key={key} 
+						onClick={() => {
+							props.setCurrentProf(val);
+						}}
+					>
+						<ListItemText primary={val.firstName + " " + val.lastName[0]}
+							style={{marginLeft: '12%'}}
+						/>
+					</ListItem> );
+			}
+			)}
+
+			</List>
+		</div>
+	);
+}
+
+/*	return (
 		<div className={classes.root}>
 			<List component="nav" aria-label="people">
 			{tagFilter( (MockData.filter((item) => {
@@ -118,11 +165,5 @@ export default function PeopleList(props){
 			</List>
 		</div>
 	);
-}
 
-/*
-export default function PeopleList(props){
-	return (<div>
-	</div>)
-}
 */

@@ -141,6 +141,22 @@ function App() {
 				headerHeight={100}
 				setStart={()=>{setCurrentProf(dummy)}}
 				setFAQ={()=>{setCurrentProf(faq)}}
+				setMyProf={()=>{
+					if(currentUser != null){
+						userRef.child(currentUser.uid).get().then((snapshot) => {
+							setCurrentProf(snapshot.val());
+						})
+						/*
+						setCurrentProf(userRef.child(currentUser.uid).get().then((snapshot) => {
+							if(snapshot.exists()){
+								return snapshot.val()
+							}
+						}).catch((error) => {
+							console.log(error);
+						}))
+						*/
+					}
+				}}
 			/>
 
 			<div>
