@@ -5,6 +5,7 @@ import TextField from '@material-ui/core/TextField';
 import { userRef } from '../firebase';
 import { useAuth } from '../contexts/AuthContext';
 import AddIcon from '@material-ui/icons/Add';
+import List from '@material-ui/core/List';
 
 function Spacer(props) {
 	return <div style={{width: props.width, height: props.height}}> </div>;
@@ -18,9 +19,6 @@ export default function Profile(props){
 	const { currentUser } = useAuth();
 	const [snackOpen, setSnackOpen] = useState(false);
 
-	useEffect(() => {
-		setPerson(props.person);
-	}, [props.person]);
 
 	//maybe undefined
 	const mundef = (list) => (list == undefined? []: list);
@@ -28,6 +26,12 @@ export default function Profile(props){
 	const [contacts, setContacts] = useState(mundef(person.contactInfo));
 	const [ctag, setCTag] = useState("");
 	const [ccontact, setCContact] = useState("");
+
+	useEffect(() => {
+		setPerson(props.person);
+		setTags(person.tags);
+		setContacts(person.contacts);
+	}, [props.person]);
 	
 	const handleBioChange = (event) => {
 		setBioText(event.target.value);
@@ -42,7 +46,9 @@ export default function Profile(props){
 	}
 
 	const addTag = () => {
-		tags.push(ctag);
+		if(ctag !== ""){
+			tags.push(ctag);
+		}
 	}
 
 	const updateProfile = () => {
