@@ -6,6 +6,12 @@ import { userRef } from '../firebase';
 import { useAuth } from '../contexts/AuthContext';
 import AddIcon from '@material-ui/icons/Add';
 import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
+import CloseIcon from '@material-ui/icons/Close';
+import IconButton from '@material-ui/core/IconButton';
 
 function Spacer(props) {
 	return <div style={{width: props.width, height: props.height}}> </div>;
@@ -29,6 +35,7 @@ export default function Profile(props){
 
 	useEffect(() => {
 		setPerson(props.person);
+		cancelChanges();
 		setBioText(person.bio);
 		setTags(person.tags);
 		setContacts(person.contacts);
@@ -50,6 +57,10 @@ export default function Profile(props){
 		if(ctag !== ""){
 			tags.push(ctag);
 		}
+	}
+
+	const cancelChanges = () => {
+		setEditMode(false);
 	}
 
 	const updateProfile = () => {
@@ -95,7 +106,11 @@ export default function Profile(props){
 					</Button>
 					</div> )
 				:
-					( <div>
+					( <div style={{display: "flex"}} >
+					<Button variant="outlined" color="secondary" onClick={cancelChanges}>
+						Cancel
+					</Button>
+					<Spacer width={10} />
 					<Button variant="contained" color="secondary" onClick={() => {
 						updateProfile();
 						setEditMode(false);
@@ -141,6 +156,16 @@ export default function Profile(props){
 					Add
 				</Button>
 			</div>
+				<List>
+					{ tags.map(item => {
+						return ( <ListItem>
+							<ListItemText primary={item} />
+							<IconButton edge="end">
+								<CloseIcon />
+							</IconButton>
+						</ListItem> )
+					})}
+				</List>
 			</div>
 
 			:
