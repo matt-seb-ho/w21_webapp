@@ -24,7 +24,13 @@ export default function Profile(props){
 	const [editMode, setEditMode] = useState(false);
 	const [bioText, setBioText] = useState(person.bio);
 	const [snackOpen, setSnackOpen] = useState(false);
-
+	
+	const snackBegone = (
+		<Button color="secondary" size="small"
+			onClick={() => {setSnackOpen(false)}}>
+			Aight.
+		</Button>
+	);
 
 	//maybe undefined
 	const mundef = (arr) => {
@@ -58,7 +64,7 @@ export default function Profile(props){
 		cancelChanges();
 		setBioText(person.bio);
 		setStags(mundef(person.tags));
-		setContacts(mundef(person.contacts));
+		setContacts(mundef(person.contactInfo));
 		console.log("profChanged effect went off");
 		console.log("props.person", props.person);
 		console.log("person: ", person);
@@ -253,7 +259,7 @@ export default function Profile(props){
 			<h3 style={{marginBottom: 0, paddingBottom: 0}}>Bio</h3>
 			<p>{person.bio}</p>
 			<Spacer height="5%"/>
-			<h3 style={{marginBottom: 0, paddingBottom: 0}}>Contact Info</h3>
+			<h3 style={{marginBottom: 10, paddingBottom: 0}}>Contact Info</h3>
 			<ul style={{listStyle: "none", paddingTop: 0, marginTop: 0}}>
 				{person.contactInfo != null && person.contactInfo.map((item) => {
 						return <li>{item}</li>
@@ -261,7 +267,7 @@ export default function Profile(props){
 				}
 			</ul>
 			<h3 style={{marginBottom: 0, paddingBottom: 0}}>Tags</h3>
-			<ul style={{paddingTop: 0, marginTop: 0}}>
+			<ul style={{paddingTop: 10, marginTop: 0}}>
 				{person.tags != null && person.tags.map((item) => {
 						return <li>{item}</li>
 					})
@@ -275,6 +281,7 @@ export default function Profile(props){
 				message="Your changes have been saved."
 				open={snackOpen}
 				onClose={() => { setSnackOpen(false) }}
+				action={snackBegone}
 			/>
 		</Paper>
 	);
