@@ -133,6 +133,11 @@
 	flex-grow: 0;
 }
 
+.profName {
+	margin-left: 10;
+	padding: 15;
+}
+
 
 html {	
   /*

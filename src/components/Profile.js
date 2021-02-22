@@ -17,6 +17,9 @@ function Spacer(props) {
 	return <div style={{width: props.width, height: props.height}}> </div>;
 }
 
+const cardPadding = 18;
+const cardColor = "#232929";
+
 export default function Profile(props){
 	//let person = props.person;	
 	const { currentUser } = useAuth();
@@ -137,29 +140,31 @@ export default function Profile(props){
 	}
 
 	return (
-		<Paper className="profile">
-			<div style={{display: "flex", alignItems: "flex-end",}}>
+		<Paper className="profile" style={{backgroundColor: "#232929"}}>
+
+			<Paper className="profileHead" style={{backgroundColor: "#ff4081"}}>
+			<div style={{display: "flex", alignItems: "center", marginLeft: 10, marginRight: 10}}>
 			{/*
 			<img src={dummyPfp} height="15%" width="15%" />
 			<Spacer width="10%" />
+			<h1 className="profName" style={{marginBottom: 0, paddingBottom: 0, flexGrow: 0}}>{person.firstName} {person.lastName}</h1>
 			*/}
-			
-			<h1 style={{marginBottom: 0, paddingBottom: 0, flexGrow: 0}}>{person.firstName} {person.lastName}</h1>
+			<h1 className="profName">{person.firstName} {person.lastName}</h1>
 			<div style={{flexGrow: 10}}> </div>
 			{ person["editable"] != null &&
 				(!editMode?
 					( <div>
-					<Button variant="outlined" color="primary" onClick={() => {
+					<Button color="white" onClick={() => {
 						setEditMode(true);
 					}}
 						style={{flexGrow: 0}}
 					>
-						Edit
+						Edit Profile
 					</Button>
 					</div> )
 				:
 					( <div style={{display: "flex"}} >
-					<Button variant="outlined" color="secondary" onClick={cancelChanges}>
+					<Button variant="contained" color="white" onClick={cancelChanges}>
 						Cancel
 					</Button>
 					<Spacer width={10} />
@@ -172,8 +177,8 @@ export default function Profile(props){
 					</div> )
 				)
 			}
-
 			</div>
+			</Paper>
 			<Spacer height="3%" />
 			{ editMode? 
 			//edit mode
@@ -256,16 +261,29 @@ export default function Profile(props){
 
 			//viewing mode
 			<div>
-			<h3 style={{marginBottom: 0, paddingBottom: 0}}>Bio</h3>
-			<p>{person.bio}</p>
-			<Spacer height="5%"/>
-			<h3 style={{marginBottom: 10, paddingBottom: 0}}>Contact Info</h3>
-			<ul style={{listStyle: "none", paddingTop: 0, marginTop: 0}}>
-				{person.contactInfo != null && person.contactInfo.map((item) => {
-						return <li>{item}</li>
-					})
-				}
-			</ul>
+				<Paper 
+					variant="outlined"
+					style={{
+						padding: cardPadding, 
+						backgroundColor: cardColor
+					}}
+				>
+				<div id="profBio">
+					<h3 style={{marginBottom: 0, paddingBottom: 0}}>Bio</h3>
+					<p>{person.bio}</p>
+				</div>
+				</Paper>
+			<Spacer height={20} />
+				<div id="profLists" style={{display: "flex"}}>
+				<Paper 
+					variant="outlined"
+					style={{
+						flexGrow: 1, 
+						padding: cardPadding, 
+						backgroundColor: cardColor
+					}}
+				>
+				<div> 
 			<h3 style={{marginBottom: 0, paddingBottom: 0}}>Tags</h3>
 			<ul style={{paddingTop: 10, marginTop: 0}}>
 				{person.tags != null && person.tags.map((item) => {
@@ -273,6 +291,29 @@ export default function Profile(props){
 					})
 				}
 			</ul>
+				</div>
+				</Paper>
+				<Spacer width={20} />
+				<Paper 
+					variant="outlined"
+					style={{
+						flexGrow: 2, 
+						padding: cardPadding, 
+						backgroundColor: cardColor,
+						minHeight: 200,
+					}}
+				>
+				<div>
+			<h3 style={{marginBottom: 10, paddingBottom: 0}}>Contact Info</h3>
+			<ul style={{listStyle: "none", paddingTop: 0, marginTop: 0}}>
+				{person.contactInfo != null && person.contactInfo.map((item) => {
+						return <li>{item}</li>
+					})
+				}
+			</ul>
+				</div>
+				</Paper>
+				</div>
 			</div>
 
 			}
