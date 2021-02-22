@@ -144,7 +144,9 @@ function App() {
 				setMyProf={()=>{
 					if(currentUser != null){
 						userRef.child(currentUser.uid).get().then((snapshot) => {
-							setCurrentProf(snapshot.val());
+							let person = snapshot.val();
+							person["editable"] = true;
+							setCurrentProf(person);
 						})
 						/*
 						setCurrentProf(userRef.child(currentUser.uid).get().then((snapshot) => {
