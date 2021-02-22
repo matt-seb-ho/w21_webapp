@@ -29,6 +29,7 @@ export default function Profile(props){
 
 	useEffect(() => {
 		setPerson(props.person);
+		setBioText(person.bio);
 		setTags(person.tags);
 		setContacts(person.contacts);
 	}, [props.person]);
@@ -53,6 +54,14 @@ export default function Profile(props){
 
 	const updateProfile = () => {
 		userRef.child(currentUser.uid).set({
+			firstName: person.firstName,
+			lastName: person.lastName,
+			email: person.email,
+			contactInfo: person.contactInfo == undefined? []: person.contactInfo,
+			tags: tags,
+			bio: bioText,
+		});
+		setPerson({
 			firstName: person.firstName,
 			lastName: person.lastName,
 			email: person.email,
@@ -139,11 +148,11 @@ export default function Profile(props){
 			//viewing mode
 			<div>
 			<h3 style={{marginBottom: 0, paddingBottom: 0}}>Bio</h3>
-			<p>{bioText}</p>
+			<p>{person.bio}</p>
 			<Spacer height="5%"/>
 			<h3 style={{marginBottom: 0, paddingBottom: 0}}>Tags</h3>
 			<ul>
-				{tags != null && tags.map((item) => {
+				{person.tags != null && person.tags.map((item) => {
 						return <li>{item}</li>
 					})
 				}
