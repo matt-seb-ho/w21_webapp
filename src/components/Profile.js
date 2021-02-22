@@ -19,27 +19,51 @@ function Spacer(props) {
 
 export default function Profile(props){
 	//let person = props.person;	
+	const { currentUser } = useAuth();
 	const [person, setPerson] = useState(props.person);
 	const [editMode, setEditMode] = useState(false);
 	const [bioText, setBioText] = useState(person.bio);
-	const { currentUser } = useAuth();
 	const [snackOpen, setSnackOpen] = useState(false);
 
 
 	//maybe undefined
-	const mundef = (list) => (list == undefined? []: list);
-	const [tags, setTags] = useState(mundef(person.tags));
+	const mundef = (arr) => {
+		if (arr === undefined) {
+			return [];
+		}
+		return arr;
+	}
+
+	const [stags, setStags] = useState(mundef(person.tags));
 	const [contacts, setContacts] = useState(mundef(person.contactInfo));
 	const [ctag, setCTag] = useState("");
 	const [ccontact, setCContact] = useState("");
+	const [profChanged, setProfChanged] = useState(false);
 
 	useEffect(() => {
 		setPerson(props.person);
+		setProfChanged(true);
+		console.log("props effect went off");
+		console.log("props.person", props.person);
+		console.log("person: ", person);
+		/*
 		cancelChanges();
 		setBioText(person.bio);
-		setTags(person.tags);
+		setStags(mundef(person.tags));
 		setContacts(person.contacts);
+		*/
 	}, [props.person]);
+
+	useEffect(() => {
+		cancelChanges();
+		setBioText(person.bio);
+		setStags(mundef(person.tags));
+		setContacts(person.contacts);
+		console.log("profChanged effect went off");
+		console.log("props.person", props.person);
+		console.log("person: ", person);
+		setProfChanged(false);
+	}, [profChanged]);
 	
 	const handleBioChange = (event) => {
 		setBioText(event.target.value);
@@ -55,11 +79,15 @@ export default function Profile(props){
 
 	const addTag = () => {
 		if(ctag !== ""){
-			tags.push(ctag);
+			let updatedStags = [...stags];
+			updatedStags.push(ctag);
+			setStags(updatedStags);
 		}
 	}
 
 	const cancelChanges = () => {
+		setStags(person.tags);
+		setContacts(person.contactInfo);
 		setEditMode(false);
 	}
 
@@ -69,7 +97,7 @@ export default function Profile(props){
 			lastName: person.lastName,
 			email: person.email,
 			contactInfo: person.contactInfo == undefined? []: person.contactInfo,
-			tags: tags,
+			tags: stags,
 			bio: bioText,
 		});
 		setPerson({
@@ -77,11 +105,15 @@ export default function Profile(props){
 			lastName: person.lastName,
 			email: person.email,
 			contactInfo: person.contactInfo == undefined? []: person.contactInfo,
-			tags: tags,
+			tags: stags,
 			bio: bioText,
 		});
 		setSnackOpen(true);
 		//console.log("profile updated");
+	}
+
+	const handleRemoveTag = (tag) => {
+		setStags(stags.filter(item => item !== tag));
 	}
 
 	return (
@@ -97,7 +129,7 @@ export default function Profile(props){
 			{ person["editable"] != null &&
 				(!editMode?
 					( <div>
-					<Button variant="contained" color="primary" onClick={() => {
+					<Button variant="outlined" color="primary" onClick={() => {
 						setEditMode(true);
 					}}
 						style={{flexGrow: 0}}
@@ -157,10 +189,12 @@ export default function Profile(props){
 				</Button>
 			</div>
 				<List>
-					{ tags.map(item => {
+					{ stags.map(item => {
 						return ( <ListItem>
 							<ListItemText primary={item} />
-							<IconButton edge="end">
+							<IconButton edge="end" onClick={() => {
+								handleRemoveTag(item);
+							}}>
 								<CloseIcon />
 							</IconButton>
 						</ListItem> )
