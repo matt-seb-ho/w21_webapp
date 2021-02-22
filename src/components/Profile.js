@@ -58,7 +58,7 @@ export default function Profile(props){
 		cancelChanges();
 		setBioText(person.bio);
 		setStags(mundef(person.tags));
-		setContacts(person.contacts);
+		setContacts(mundef(person.contacts));
 		console.log("profChanged effect went off");
 		console.log("props.person", props.person);
 		console.log("person: ", person);
@@ -85,6 +85,14 @@ export default function Profile(props){
 		}
 	}
 
+	const addCon = () => {
+		if(ccontact !== ""){
+			let updatedContacts = [...contacts];
+			updatedContacts.push(ccontact);
+			setContacts(updatedContacts);
+		}
+	}
+
 	const cancelChanges = () => {
 		setStags(person.tags);
 		setContacts(person.contactInfo);
@@ -96,7 +104,8 @@ export default function Profile(props){
 			firstName: person.firstName,
 			lastName: person.lastName,
 			email: person.email,
-			contactInfo: person.contactInfo == undefined? []: person.contactInfo,
+			contactInfo: contacts,
+			//contactInfo: person.contactInfo == undefined? []: person.contactInfo,
 			tags: stags,
 			bio: bioText,
 		});
@@ -104,7 +113,8 @@ export default function Profile(props){
 			firstName: person.firstName,
 			lastName: person.lastName,
 			email: person.email,
-			contactInfo: person.contactInfo == undefined? []: person.contactInfo,
+			//contactInfo: person.contactInfo == undefined? []: person.contactInfo,
+			contactInfo: contacts,
 			tags: stags,
 			bio: bioText,
 		});
@@ -114,6 +124,10 @@ export default function Profile(props){
 
 	const handleRemoveTag = (tag) => {
 		setStags(stags.filter(item => item !== tag));
+	}
+
+	const handleRemoveCon = (con) => {
+		setContacts(contacts.filter(item => item !== con));
 	}
 
 	return (
@@ -173,6 +187,36 @@ export default function Profile(props){
 				<TextField
 					variant="filled"
 					margin="normal"
+					label="Contact Info"
+					onChange={handleCContactChange}
+					size="small"
+					fullWidth
+					style={{height: "75%"}}
+				
+				/>
+				<Spacer width={50} />
+				<Button variant="contained" color="secondary" onClick={addCon}
+					style={{height: "20%"}}
+					endIcon={<AddIcon />}>
+					Add
+				</Button>
+			</div>
+				<List>
+					{ contacts.map(item => {
+						return ( <ListItem>
+							<ListItemText primary={item} />
+							<IconButton edge="end" onClick={() => {
+								handleRemoveCon(item);
+							}}>
+								<CloseIcon />
+							</IconButton>
+						</ListItem> )
+					})}
+				</List>
+			<div style={{display: "flex", alignItems: "center"}}>
+				<TextField
+					variant="filled"
+					margin="normal"
 					label="Tag"
 					placeHolder="Add New Tags Here"
 					onChange={handleCTagChange}
@@ -209,8 +253,15 @@ export default function Profile(props){
 			<h3 style={{marginBottom: 0, paddingBottom: 0}}>Bio</h3>
 			<p>{person.bio}</p>
 			<Spacer height="5%"/>
+			<h3 style={{marginBottom: 0, paddingBottom: 0}}>Contact Info</h3>
+			<ul style={{listStyle: "none", paddingTop: 0, marginTop: 0}}>
+				{person.contactInfo != null && person.contactInfo.map((item) => {
+						return <li>{item}</li>
+					})
+				}
+			</ul>
 			<h3 style={{marginBottom: 0, paddingBottom: 0}}>Tags</h3>
-			<ul>
+			<ul style={{paddingTop: 0, marginTop: 0}}>
 				{person.tags != null && person.tags.map((item) => {
 						return <li>{item}</li>
 					})
