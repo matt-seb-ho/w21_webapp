@@ -26,6 +26,7 @@ import { useAuth, AuthProvider } from './contexts/AuthContext';
 import { auth } from './firebase';
 import PeopleList, {SimpleList} from './components/PeopleList';
 import Profile from './components/Profile';
+import ProfWrapper from './components/ProfWrapper';
 import SideBar from './components/SideBar';
 import AppBar from '@material-ui/core/AppBar';
 
@@ -162,7 +163,8 @@ function App() {
 			/>
 
 			<div>
-			<Profile person={currentProf}/>
+			{/* <Profile person={currentProf}/> */}
+			<ProfWrapper person={currentProf}/>
 			<PeopleList 
 				searchIn={searchIn} 
 				setCurrentProf={setCurrentProf}
