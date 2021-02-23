@@ -82,16 +82,18 @@ export default function SideBar(props){
 					</ListItem>
 					<Divider />
 					<ListItem>
-						<ListItemText primary="Current Tags:" />
+						<ListItemText primary="Currently Searching:" />
 					</ListItem>
 					
 					{ props.tagStr.split(',').map(item => {
 						return (
 							<ListItem>
 								<ListItemText primary={item.trim()} inset={true} />
+								{/*
 								<IconButton edge="end" >
 									<CloseIcon />
 								</IconButton>
+								*/}
 							</ListItem>
 						)})
 					}

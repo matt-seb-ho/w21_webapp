@@ -18,7 +18,7 @@ function Spacer(props) {
 }
 
 const cardPadding = 18;
-const cardColor = "#232929";
+const cardColor = "#1c1e1f";
 
 export default function Profile(props){
 	//let person = props.person;	
@@ -140,7 +140,7 @@ export default function Profile(props){
 	}
 
 	return (
-		<Paper className="profile" style={{backgroundColor: "#232929"}}>
+		<Paper className="profile" style={{backgroundColor: "#1c1e1f"}}>
 
 			<Paper className="profileHead" style={{backgroundColor: "#ff4081"}}>
 			<div style={{display: "flex", alignItems: "center", marginLeft: 10, marginRight: 10}}>
